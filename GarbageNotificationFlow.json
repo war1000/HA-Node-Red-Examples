@@ -1,0 +1,36 @@
+[
+    {
+        "id": "4e324334.1a7f6c",
+        "type": "api-current-state",
+        "z": "52604bd8.5193f4",
+        "name": "Compost Tomorrow?",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "1",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sensor.compost",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 600,
+        "y": 80,
+        "wires": [
+            [
+                "57a8c3ed.eee42c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "184c3d5d.435713",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant"
+    }
+]
