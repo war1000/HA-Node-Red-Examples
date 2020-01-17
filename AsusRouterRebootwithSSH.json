@@ -1,0 +1,238 @@
+[
+    {
+        "id": "343e08a1.fc3668",
+        "type": "tab",
+        "label": "Reboot Router",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "be893600.a1e798",
+        "type": "inject",
+        "z": "343e08a1.fc3668",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 160,
+        "wires": [
+            [
+                "b9cc89b6.26d908"
+            ]
+        ]
+    },
+    {
+        "id": "b9cc89b6.26d908",
+        "type": "exec",
+        "z": "343e08a1.fc3668",
+        "command": "ping -c 2",
+        "addpay": false,
+        "append": "www.google.com",
+        "useSpawn": "false",
+        "timer": "20",
+        "oldrc": false,
+        "name": "",
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [],
+            [],
+            [
+                "23b16edf.19e052"
+            ]
+        ]
+    },
+    {
+        "id": "f56309e4.5808a8",
+        "type": "debug",
+        "z": "343e08a1.fc3668",
+        "name": "success",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 600,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "23b16edf.19e052",
+        "type": "switch",
+        "z": "343e08a1.fc3668",
+        "name": "success ?",
+        "property": "payload.code",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 440,
+        "y": 180,
+        "wires": [
+            [
+                "f56309e4.5808a8"
+            ],
+            [
+                "d2f00f74.e965b"
+            ]
+        ]
+    },
+    {
+        "id": "1f458afc.ef4aa5",
+        "type": "exec",
+        "z": "343e08a1.fc3668",
+        "command": "ssh admin:password@192.168.1.1:23 'reboot'",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "20",
+        "oldrc": false,
+        "name": "reboot",
+        "x": 1070,
+        "y": 420,
+        "wires": [
+            [],
+            [],
+            [
+                "65455786.0d98f8"
+            ]
+        ]
+    },
+    {
+        "id": "d2f00f74.e965b",
+        "type": "delay",
+        "z": "343e08a1.fc3668",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 600,
+        "y": 240,
+        "wires": [
+            [
+                "300b8fc8.07e64"
+            ]
+        ]
+    },
+    {
+        "id": "300b8fc8.07e64",
+        "type": "exec",
+        "z": "343e08a1.fc3668",
+        "command": "ping -c 2",
+        "addpay": false,
+        "append": "www.google.com",
+        "useSpawn": "false",
+        "timer": "20",
+        "oldrc": false,
+        "name": "",
+        "x": 760,
+        "y": 240,
+        "wires": [
+            [],
+            [],
+            [
+                "85541d7b.bd7d2"
+            ]
+        ]
+    },
+    {
+        "id": "85541d7b.bd7d2",
+        "type": "switch",
+        "z": "343e08a1.fc3668",
+        "name": "success ?",
+        "property": "payload.code",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 920,
+        "y": 260,
+        "wires": [
+            [
+                "658f0e50.3544b"
+            ],
+            [
+                "6c8d313c.b659a",
+                "1f458afc.ef4aa5"
+            ]
+        ]
+    },
+    {
+        "id": "6c8d313c.b659a",
+        "type": "debug",
+        "z": "343e08a1.fc3668",
+        "name": "error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1090,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "658f0e50.3544b",
+        "type": "debug",
+        "z": "343e08a1.fc3668",
+        "name": "success#2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1090,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "65455786.0d98f8",
+        "type": "debug",
+        "z": "343e08a1.fc3668",
+        "name": "reboot",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1150,
+        "y": 480,
+        "wires": []
+    }
+]
