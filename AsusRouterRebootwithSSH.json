@@ -97,7 +97,7 @@
         "id": "1f458afc.ef4aa5",
         "type": "exec",
         "z": "343e08a1.fc3668",
-        "command": "ssh admin:password@192.168.1.1:23 'reboot'",
+        "command": "ssh yourusername:yourpassword@192.168.1.1:23 'reboot'",
         "addpay": false,
         "append": "",
         "useSpawn": "false",
