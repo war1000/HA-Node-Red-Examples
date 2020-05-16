@@ -1,0 +1,541 @@
+[
+    {
+        "id": "41296ab1.7d6864",
+        "type": "tab",
+        "label": "Garage Automation",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a4a7adb.3dd465",
+        "type": "comment",
+        "z": "41296ab1.7d6864",
+        "name": "Trigger IFTTT Alarm and Garage Door with Wyze Switch",
+        "info": "",
+        "x": 240,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5f7b28db.c681a8",
+        "type": "server-state-changed",
+        "z": "41296ab1.7d6864",
+        "name": "Wyze Garage/Alarm Switch",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.remote01_wyze_garage_switch",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 160,
+        "y": 180,
+        "wires": [
+            [
+                "a2e94c68.941dc",
+                "1110367e.ad5f5a",
+                "a9bd2a34.de5688"
+            ]
+        ]
+    },
+    {
+        "id": "1bd4deaa.d12b81",
+        "type": "api-call-service",
+        "z": "41296ab1.7d6864",
+        "name": "HA Alarm - Disarm",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "alarm_control_panel",
+        "service": "alarm_disarm",
+        "entityId": "alarm_control_panel.ha_alarm",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 890,
+        "y": 200,
+        "wires": [
+            [
+                "b65d961e.2b4eb8"
+            ]
+        ]
+    },
+    {
+        "id": "8d265a14.18bb68",
+        "type": "api-call-service",
+        "z": "41296ab1.7d6864",
+        "name": "Garage Door - Toggle",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "ifttt",
+        "service": "trigger",
+        "entityId": "",
+        "data": "{\"event\":\"OpenGarageDoor\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1200,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a2e94c68.941dc",
+        "type": "api-current-state",
+        "z": "41296ab1.7d6864",
+        "name": "HA Alarm - Armed?",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "armed_away",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "alarm_control_panel.ha_alarm",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "1bd4deaa.d12b81"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1110367e.ad5f5a",
+        "type": "api-current-state",
+        "z": "41296ab1.7d6864",
+        "name": "HA Alarm - Armed-Home?",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "armed_home",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "alarm_control_panel.ha_alarm",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 610,
+        "y": 260,
+        "wires": [
+            [
+                "1bd4deaa.d12b81"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a9bd2a34.de5688",
+        "type": "api-current-state",
+        "z": "41296ab1.7d6864",
+        "name": "HA Alarm - Disarmed?",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "disarmed",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "alarm_control_panel.ha_alarm",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 600,
+        "y": 340,
+        "wires": [
+            [
+                "b65d961e.2b4eb8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b65d961e.2b4eb8",
+        "type": "time-range-switch",
+        "z": "41296ab1.7d6864",
+        "name": "7 am - 11 pm",
+        "lat": "43.69848",
+        "lon": "-79.30147",
+        "startTime": "07:00",
+        "endTime": "23:00",
+        "startOffset": 0,
+        "endOffset": 0,
+        "x": 990,
+        "y": 340,
+        "wires": [
+            [
+                "8d265a14.18bb68"
+            ],
+            []
+        ],
+        "icon": "node-red/timer.svg"
+    },
+    {
+        "id": "9ce23e84.f23b",
+        "type": "server-state-changed",
+        "z": "41296ab1.7d6864",
+        "name": "Garage Door",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.remote01_wyze_garage_door",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 150,
+        "y": 560,
+        "wires": [
+            [
+                "16d926ea.e851f9"
+            ]
+        ]
+    },
+    {
+        "id": "16d926ea.e851f9",
+        "type": "switch",
+        "z": "41296ab1.7d6864",
+        "name": "On - Off",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 340,
+        "y": 560,
+        "wires": [
+            [
+                "42e3500a.037b9",
+                "ac8ffc83.3a7a7",
+                "bcb6fa6a.8cb1c8"
+            ],
+            [
+                "42e3500a.037b9",
+                "9cfa7656.b2d6a8",
+                "bcb6fa6a.8cb1c8"
+            ]
+        ]
+    },
+    {
+        "id": "42e3500a.037b9",
+        "type": "trigger",
+        "z": "41296ab1.7d6864",
+        "op1": "",
+        "op2": "on",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "15",
+        "extend": false,
+        "units": "min",
+        "reset": "off",
+        "bytopic": "all",
+        "name": "",
+        "x": 510,
+        "y": 620,
+        "wires": [
+            [
+                "3badcfdb.8315b"
+            ]
+        ]
+    },
+    {
+        "id": "c9d1065d.707fc8",
+        "type": "comment",
+        "z": "41296ab1.7d6864",
+        "name": "Garage Door Actionable Notifications",
+        "info": "",
+        "x": 220,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "3badcfdb.8315b",
+        "type": "api-call-service",
+        "z": "41296ab1.7d6864",
+        "name": "Notify",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "notify",
+        "entityId": "",
+        "data": "{\"message\":\"Garage has been open for more than 15 mins\",\"title\":\"Garage Door Alert\",\"data\":{\"actions\":[{\"action\":\"CloseGarage\",\"title\":\"Close Garage\"},{\"action\":\"IgnoreGarage\",\"title\":\"Ignore\"}]}}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 710,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6a2dd90a.d05b38",
+        "type": "server-events",
+        "z": "41296ab1.7d6864",
+        "name": "Catch Mobile Action",
+        "server": "184c3d5d.435713",
+        "event_type": "mobile_app_notification_action",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "x": 170,
+        "y": 840,
+        "wires": [
+            [
+                "169f988a.03ff37"
+            ]
+        ]
+    },
+    {
+        "id": "169f988a.03ff37",
+        "type": "switch",
+        "z": "41296ab1.7d6864",
+        "name": "Close Garage - Ignore",
+        "property": "payload.event.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "CloseGarage",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "IgnoreGarage",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 400,
+        "y": 840,
+        "wires": [
+            [
+                "593ac851.372a68"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cda6de71.e81de",
+        "type": "api-call-service",
+        "z": "41296ab1.7d6864",
+        "name": "Garage Door - Toggle",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "ifttt",
+        "service": "trigger",
+        "entityId": "",
+        "data": "{\"event\":\"OpenGarageDoor\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 920,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac8ffc83.3a7a7",
+        "type": "api-call-service",
+        "z": "41296ab1.7d6864",
+        "name": "Notify",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "notify",
+        "entityId": "",
+        "data": "{\"message\":\"Garage door opened\",\"title\":\"Garage Door Notification\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 710,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9cfa7656.b2d6a8",
+        "type": "api-call-service",
+        "z": "41296ab1.7d6864",
+        "name": "Notify",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "notify",
+        "entityId": "",
+        "data": "{\"message\":\"Garage door closed\",\"title\":\"Garage Door Notification\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 710,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bcb6fa6a.8cb1c8",
+        "type": "trigger",
+        "z": "41296ab1.7d6864",
+        "op1": "",
+        "op2": "on",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "30",
+        "extend": false,
+        "units": "min",
+        "reset": "off",
+        "bytopic": "all",
+        "name": "",
+        "x": 510,
+        "y": 680,
+        "wires": [
+            [
+                "cae2648f.342238"
+            ]
+        ]
+    },
+    {
+        "id": "cae2648f.342238",
+        "type": "api-call-service",
+        "z": "41296ab1.7d6864",
+        "name": "Garage Door - Toggle",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "ifttt",
+        "service": "trigger",
+        "entityId": "",
+        "data": "{\"event\":\"OpenGarageDoor\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 720,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "593ac851.372a68",
+        "type": "api-current-state",
+        "z": "41296ab1.7d6864",
+        "name": "Is Garage Door Open?",
+        "server": "184c3d5d.435713",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "binary_sensor.remote01_wyze_garage_door",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 640,
+        "y": 840,
+        "wires": [
+            [
+                "cda6de71.e81de"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "184c3d5d.435713",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant"
+    }
+]
